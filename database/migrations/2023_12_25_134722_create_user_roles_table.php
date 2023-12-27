@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Bảng đánh dấu quyền
         Schema::create('user_roles', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('role_id');
+            $table->primary(['user_id', 'role_id']);
+            $table->foreign('user_id')->references('id')->on('users');   // Khóa ngoại
+            $table->foreign('role_id')->references('id')->on('roles');   // Khóa ngoại
         });
     }
 

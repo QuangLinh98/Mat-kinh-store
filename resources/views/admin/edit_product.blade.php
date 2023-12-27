@@ -30,7 +30,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Product name :</label>
+                                    <label for="exampleInputEmail1">Product quantity :</label>
                                     <input type="text" class="form-control" name="product_quantity"
                                         id="exampleInputEmail1" value="{{ $pro->product_quantity }}">
                                 </div>

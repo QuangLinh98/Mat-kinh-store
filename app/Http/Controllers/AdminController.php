@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
+
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -16,6 +19,7 @@ class AdminController extends Controller
     // Hàm check login
     public function AuthLogin()
     {
+        // dd(Auth::user());  // xuất ra array
         $admin_id = Session::get('admin_id');
         if ($admin_id == true) {
             return Redirect::to('dashboard');

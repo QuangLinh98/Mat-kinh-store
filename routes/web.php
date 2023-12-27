@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryProductController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\MemberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -131,3 +132,41 @@ Route::post('/save-product', [
 
 // END
 // END :  XỬ LÝ -PRODUCT (DASHBOARD)
+
+
+// XỬ LÝ CUSTOMER (DASHBOARD)
+// Route member registration
+Route::post('/register-member', [
+    MemberController::class, 'store'
+])->name('register-member');
+
+Route::get('register-member', [
+    MemberController::class, 'create'
+])->name('register-member');
+
+Route::get('/all-member', [
+    MemberController::class, 'all_member'
+])->name('all-member');
+// End
+
+
+// Xử lý trang UPDATE member
+Route::post('/ban-member/{id}', [
+    MemberController::class, 'banMember'
+])->name('ban-member');
+
+Route::post('/unban-member/{id}', [
+    MemberController::class, 'unbanMember'
+])->name('unban-member');
+
+// Route::get('/delete-member/{id}', [
+//     MemberController::class, 'delete_member'
+// ])->name('delete-member');
+
+
+// Route::post('/save-product', [
+//     MemberController::class, 'save_product'
+// ])->name('save-product');
+
+// END
+// END :  XỬ LÝ -CUSTOMER (DASHBOARD)

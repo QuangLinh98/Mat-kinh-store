@@ -122,7 +122,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class="fa fa-book"></i>
-                                <span>Category products list</span>
+                                <span>Category products</span>
                             </a>
                             <ul class="sub">
                                 <li><a href="{{ URL::to('/add-category-product/') }}">Add Category product</a></li>
@@ -135,11 +135,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class="fa fa-book"></i>
-                                <span>Products list</span>
+                                <span>Products</span>
                             </a>
                             <ul class="sub">
                                 <li><a href="{{ URL::to('/add-product/') }}">Add product</a></li>
                                 <li><a href="{{ URL::to('/all-product/') }}">Show product list</a></li>
+                            </ul>
+                        </li>
+                        {{-- End --}}
+
+                        {{-- Product Dashboard --}}
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-book"></i>
+                                <span>Member</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a href="{{ URL::to('/register-member/') }}">Register Member</a></li>
+                                <li><a href="{{ URL::to('/all-member/') }}">Show member list</a></li>
                             </ul>
                         </li>
                         {{-- End --}}
