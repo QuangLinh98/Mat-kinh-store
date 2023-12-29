@@ -118,6 +118,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             </a>
                         </li>
 
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-book"></i>
+                                <span>Banner</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a href="{{ URL::to('/add-slider/') }}">Add slider</a></li>
+                                <li><a href="{{ URL::to('/manage-slider/') }}">Show slider list</a></li>
+                            </ul>
+                        </li>
+
+
                         {{-- Category product Dashboard --}}
                         <li class="sub-menu">
                             <a href="javascript:;">
@@ -193,6 +205,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script src="{{ asset('backend/js/jquery.nicescroll.js') }}"></script>
     {{-- <script src="{{ asset('backend/ckeditor5-build-classic/ckeditor.js') }}"></script> --}}
     <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+
+    {{-- script tìm kiếm sản phẩm --}}
+
+    {{-- <script src="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        new DataTable('#example', {
+            search: {
+                return: true
+            }
+        });
+    </script> --}}
+
     <!-- Khởi tạo CKEditor cho textarea có id là 'editor' -->
     <script>
         ClassicEditor
@@ -223,6 +250,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             });
     </script>
 
+    {{-- Đoạn script check validate --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/validator/13.6.0/validator.min.js"></script>
     <script>
         function validateForm(formName) {
@@ -256,6 +284,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             return true;
         }
     </script>
+
+
 
     <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
     <script src="{{ asset('backend/js/jquery.scrollTo.js') }}"></script>

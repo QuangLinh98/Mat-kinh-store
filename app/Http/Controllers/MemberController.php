@@ -46,7 +46,7 @@ class MemberController extends Controller
 
     public function all_member()
     {
-        $all_member = Member::all();
+        $all_member = Member::paginate(10);
         $manage_member = view('admin.all_member')->with('all_member', $all_member);  // Hiển thị dữ liệu lên trang 'all_product'
         return view('admin_layout')->with('admin.all_member', $manage_member);
     }
@@ -67,5 +67,14 @@ class MemberController extends Controller
         $member->save();
         Session::put('message', 'Unban member successfully');
         return Redirect()->back();
+    }
+
+    public function search(Request $request)
+    {
+        // Lấy danh sách sản phẩm
+        $all_member = Member::where('name', 'like', '%' . $request->key . '%')->orWhere('phone', $request->key)->paginate(10);;
+
+        // Trả về view hiển thị sản phẩm sau khi lọc
+        return view('admin.all_member', ['all_member' => $all_member->isEmpty() ? null : $all_member]);
     }
 }

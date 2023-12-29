@@ -7,23 +7,18 @@
             </div>
             <div class="row w3-res-tb">
                 <div class="col-sm-5 m-b-xs">
-                    <select class="input-sm form-control w-sm inline v-middle">
-                        <option value="0">Bulk action</option>
-                        <option value="1">Delete selected</option>
-                        <option value="2">Bulk edit</option>
-                        <option value="3">Export</option>
-                    </select>
-                    <button class="btn btn-sm btn-default">Apply</button>
+
                 </div>
                 <div class="col-sm-4">
                 </div>
                 <div class="col-sm-3">
-                    <div class="input-group">
-                        <input type="text" class="input-sm form-control" placeholder="Search">
+                    <form class="input-group" role="form" method="GET" name="myForm1"
+                        action="{{ route('search-product') }}">
+                        <input type="text" name="search_product" class="input-sm form-control" placeholder="Search">
                         <span class="input-group-btn">
-                            <button class="btn btn-sm btn-default" type="button">Go!</button>
+                            <button class="btn btn-sm btn-success" type="submit">Search</button>
                         </span>
-                    </div>
+                    </form>
                 </div>
             </div>
             <div class="table-responsive">
@@ -65,62 +60,75 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($all_product as $key => $pro)
-                            <tr>
-                                <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label>
-                                </td>
-                                <td>{{ $pro->product_name }}</td>
-                                <td>{{ $pro->product_quantity }}</td>
-                                <td>{{ $pro->product_price }}</td>
-                                <td><img src="public/uploads/product/{{ $pro->product_image }}" width="100"
-                                        height="100" alt=""></td>
-                                <td>{{ $pro->category_name }}</td>
+                        @if (isset($all_product) && count($all_product) > 0)
+                            @foreach ($all_product as $key => $pro)
+                                <tr>
+                                    <td><label class="i-checks m-b-none"><input type="checkbox"
+                                                name="post[]"><i></i></label>
+                                    </td>
+                                    <td>{{ $pro->product_name }}</td>
+                                    <td>{{ $pro->product_quantity }}</td>
+                                    <td>{{ $pro->product_price }}</td>
+                                    <td><img src="public/uploads/product/{{ $pro->product_image }}" width="100"
+                                            height="100" alt=""></td>
+                                    <td>{{ $pro->category_name }}</td>
 
-                                <td><span class="text-ellipsis">
-                                        @if ($pro->product_status == 0)
-                                            <a href="{{ '/unactive-product/' . $pro->product_id }}">
-                                                <span class="fa-thumb-styling fa fa-thumbs-up"></span>
-                                            </a>
-                                        @else
-                                            <a href="{{ '/active-product/' . $pro->product_id }}">
-                                                <span class="fa-thumb-styling fa fa-thumbs-down"></span>
-                                            </a>
-                                        @endif
-                                    </span></td>
+                                    <td><span class="text-ellipsis">
+                                            @if ($pro->product_status == 0)
+                                                <a href="{{ '/unactive-product/' . $pro->product_id }}">
+                                                    <span class="fa-thumb-styling fa fa-thumbs-up"></span>
+                                                </a>
+                                            @else
+                                                <a href="{{ '/active-product/' . $pro->product_id }}">
+                                                    <span class="fa-thumb-styling fa fa-thumbs-down"></span>
+                                                </a>
+                                            @endif
+                                        </span></td>
 
-                                <td>
-                                    <a href="{{ URL::to('/edit-product/' . $pro->product_id) }}" class="active"
-                                        ui-toggle-class="">
-                                        <i class="styling-edit fa fa-pencil-square-o text-success text-active"></i>
-                                    </a>
+                                    <td>
+                                        <a href="{{ URL::to('/edit-product/' . $pro->product_id) }}" class="active"
+                                            ui-toggle-class="">
+                                            <i class="styling-edit fa fa-pencil-square-o text-success text-active"></i>
+                                        </a>
 
-                                    <a onclick="return confirm('Are you sure to delete?')"
-                                        href="{{ URL::to('/delete-product/' . $pro->product_id) }}" class="active"
-                                        ui-toggle-class="">
-                                        <i class="styling-edit fa fa-times text-danger text"></i></a>
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach
+                                        <a onclick="return confirm('Are you sure to delete?')"
+                                            href="{{ URL::to('/delete-product/' . $pro->product_id) }}" class="active"
+                                            ui-toggle-class="">
+                                            <i class="styling-edit fa fa-times text-danger text"></i></a>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <h3 class="text-alert " style="color:red; ">No Result </h3>
+                        @endif
+
                     </tbody>
                 </table>
             </div>
             <footer class="panel-footer">
                 <div class="row">
-
                     <div class="col-sm-5 text-center">
                         <small class="text-muted inline m-t-sm m-b-sm">showing 20-30 of 50 items</small>
                     </div>
                     <div class="col-sm-7 text-right text-center-xs">
-                        <ul class="pagination pagination-sm m-t-none m-b-none">
-                            <li><a href=""><i class="fa fa-chevron-left"></i></a></li>
-                            <li><a href="">1</a></li>
-                            <li><a href="">2</a></li>
-                            <li><a href="">3</a></li>
-                            <li><a href="">4</a></li>
-                            <li><a href=""><i class="fa fa-chevron-right"></i></a></li>
-                        </ul>
+                        @if ($all_product && $all_product->count() > 0)
+                            <ul class="pagination pagination-sm m-t-none m-b-none">
+                                <li><a href="{{ $all_product->previousPageUrl() }}"><i class="fa fa-chevron-left"></i></a>
+                                </li>
+
+                                @for ($i = 1; $i <= $all_product->lastPage(); $i++)
+                                    <li class="{{ $all_product->currentPage() == $i ? 'active' : '' }}">
+                                        <a href="{{ $all_product->url($i) }}">{{ $i }}</a>
+                                    </li>
+                                @endfor
+
+                                <li><a href="{{ $all_product->nextPageUrl() }}"><i class="fa fa-chevron-right"></i></a>
+                                </li>
+                            </ul>
+                        @endif
                     </div>
+
                 </div>
             </footer>
         </div>

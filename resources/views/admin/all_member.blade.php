@@ -7,7 +7,23 @@
             <div class="panel-heading">
                 All Member
             </div>
-            <table class="table">
+            <div class="row w3-res-tb">
+                <div class="col-sm-5 m-b-xs">
+
+                </div>
+                <div class="col-sm-4">
+
+                </div>
+                <div class="col-sm-3">
+                    <form class="input-group" role="form" method="GET" name="myForm1" action="{{ route('search') }}">
+                        <input type="text" name="key" class="input-sm form-control" placeholder="Search">
+                        <span class="input-group-btn">
+                            <button class="btn btn-sm btn-success" type="submit">Search</button>
+                        </span>
+                    </form>
+                </div>
+            </div>
+            <table class="table" id="example">
                 {{-- Message hiển thị thông báo active --}}
                 <?php
                 $message = Session::get('message');
@@ -27,22 +43,7 @@
                 }
                 ?>
                 {{-- End Message --}}
-                <div class="row w3-res-tb">
-                    <div class="col-sm-5 m-b-xs">
 
-                    </div>
-                    <div class="col-sm-4">
-
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="input-group">
-                            <input type="text" class="input-sm form-control" placeholder="Search">
-                            <span class="input-group-btn">
-                                <button class="btn btn-sm btn-default" type="button">Go</button>
-                            </span>
-                        </div>
-                    </div>
-                </div>
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -54,28 +55,35 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($all_member as $item)
-                        <tr>
-                            <td>{{ $item->name }}</td>
-                            <td>{{ $item->email }}</td>
-                            <td>{{ $item->phone }}</td>
-                            <td>{{ $item->address }}</td>
-                            <td>{{ $item->yob }}</td>
-                            <td>
-                                @if ($item->is_banned)
-                                    <form method="POST" action="{{ route('unban-member', $item->id) }}">
-                                        @csrf
-                                        <button type="submit" class="btn btn-success">Unban</button>
-                                    </form>
-                                @else
-                                    <form method="POST" action="{{ route('ban-member', $item->id) }}">
-                                        @csrf
-                                        <button type="submit" class="btn btn-danger">Ban</button>
-                                    </form>
-                                @endif
-                            </td>
-                        </tr>
-                    @endforeach
+                    {{-- form hiển thị tất cả danh sách member --}}
+                    @if (isset($all_member) && count($all_member) > 0)
+                        @foreach ($all_member as $item)
+                            <tr>
+                                <td>{{ $item->name }}</td>
+                                <td>{{ $item->email }}</td>
+                                <td>{{ $item->phone }}</td>
+                                <td>{{ $item->address }}</td>
+                                <td>{{ $item->yob }}</td>
+                                <td>
+                                    @if ($item->is_banned)
+                                        <form method="POST" action="{{ route('unban-member', $item->id) }}">
+                                            @csrf
+                                            <button type="submit" class="btn btn-success">Unban</button>
+                                        </form>
+                                    @else
+                                        <form method="POST" action="{{ route('ban-member', $item->id) }}">
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger">Ban</button>
+                                        </form>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <h3 class="text-alert " style="color:red; ">No Result </h3>
+                    @endif
+
+                    {{-- end form --}}
                 </tbody>
             </table>
             <footer class="panel-footer">
@@ -85,15 +93,23 @@
                         <small class="text-muted inline m-t-sm m-b-sm">showing 20-30 of 50 items</small>
                     </div>
                     <div class="col-sm-7 text-right text-center-xs">
-                        <ul class="pagination pagination-sm m-t-none m-b-none">
-                            <li><a href=""><i class="fa fa-chevron-left"></i></a></li>
-                            <li><a href="">1</a></li>
-                            <li><a href="">2</a></li>
-                            <li><a href="">3</a></li>
-                            <li><a href="">4</a></li>
-                            <li><a href=""><i class="fa fa-chevron-right"></i></a></li>
-                        </ul>
+                        @if ($all_member && $all_member->count() > 0)
+                            <ul class="pagination pagination-sm m-t-none m-b-none">
+                                <li><a href="{{ $all_member->previousPageUrl() }}"><i class="fa fa-chevron-left"></i></a>
+                                </li>
+
+                                @for ($i = 1; $i <= $all_member->lastPage(); $i++)
+                                    <li class="{{ $all_member->currentPage() == $i ? 'active' : '' }}">
+                                        <a href="{{ $all_member->url($i) }}">{{ $i }}</a>
+                                    </li>
+                                @endfor
+
+                                <li><a href="{{ $all_member->nextPageUrl() }}"><i class="fa fa-chevron-right"></i></a></li>
+                            </ul>
+                        @endif
                     </div>
+
+
                 </div>
             </footer>
         </div>

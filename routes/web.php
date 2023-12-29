@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryProductController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\sliderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -86,6 +87,10 @@ Route::post('/save-category-product', [
     CategoryProductController::class, 'save_category_product'
 ])->name('save-category-product');
 
+Route::get('/search-category-product', [
+    CategoryProductController::class, 'search_category_product'
+])->name('search-category-product');
+
 // END
 // END :  XỬ LÝ CATEGORY-PRODUCT (DASHBOARD)
 
@@ -110,7 +115,6 @@ Route::get('/active-product/{product_id}', [
     ProductController::class, 'active_product'
 ])->name('active-product');
 
-// End
 
 // Xử lý trang UPDATE Product
 Route::get('/edit-product/{product_id}', [
@@ -130,12 +134,14 @@ Route::post('/save-product', [
     ProductController::class, 'save_product'
 ])->name('save-product');
 
-// END
-// END :  XỬ LÝ -PRODUCT (DASHBOARD)
+Route::get('/search-product', [
+    ProductController::class, 'search_product'
+])->name('search-product');
 
+//============================================================================================================
 
-// XỬ LÝ CUSTOMER (DASHBOARD)
-// Route member registration
+// XỬ LÝ Member (DASHBOARD)
+
 Route::post('/register-member', [
     MemberController::class, 'store'
 ])->name('register-member');
@@ -147,7 +153,6 @@ Route::get('register-member', [
 Route::get('/all-member', [
     MemberController::class, 'all_member'
 ])->name('all-member');
-// End
 
 
 // Xử lý trang UPDATE member
@@ -159,14 +164,44 @@ Route::post('/unban-member/{id}', [
     MemberController::class, 'unbanMember'
 ])->name('unban-member');
 
-// Route::get('/delete-member/{id}', [
-//     MemberController::class, 'delete_member'
-// ])->name('delete-member');
-
+Route::get('/search', [
+    MemberController::class, 'search'
+])->name('search');
 
 // Route::post('/save-product', [
 //     MemberController::class, 'save_product'
 // ])->name('save-product');
 
-// END
-// END :  XỬ LÝ -CUSTOMER (DASHBOARD)
+//============================================================================================================
+
+
+// Xử lý Banner
+
+Route::get('manage-slider', [
+    sliderController::class, 'manage_slider'
+])->name('manage-slider');
+
+Route::get('add-slider', [
+    sliderController::class, 'add_slider'
+])->name('add-slider');
+
+Route::post('insert-slider', [
+    sliderController::class, 'insert_slider'
+])->name('insert-slider');
+
+// Xử lý Hiden/Show của trang slider
+Route::get('/unactive-slide/{id}', [
+    sliderController::class, 'unactive_slide'
+])->name('unactive-slide');
+
+Route::get('/active-slide/{id}', [
+    sliderController::class, 'active_slide'
+])->name('active-slide');
+
+Route::get('/delete-slide/{id}', [
+    sliderController::class, 'delete_slide'
+])->name('delete-slide');
+
+Route::get('/search-slider', [
+    sliderController::class, 'search_slider'
+])->name('search-slider');

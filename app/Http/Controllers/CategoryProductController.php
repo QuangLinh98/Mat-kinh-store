@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
+use App\Models\CategoryProduct;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Log;
@@ -33,7 +34,7 @@ class CategoryProductController extends Controller
     public function all_category_product()
     {
         $this->AuthLogin();           // Nếu login thì trả về trang all_category_product
-        $all_category_product = DB::table('category_product')->get(); // Lấy dữ liệu bảng category_product
+        $all_category_product = DB::table('category_product')->paginate(10); // Lấy dữ liệu bảng category_product
 
         $manage_category_product = view('admin.all_category_product')->with('all_category_product', $all_category_product);  // Hiển thị dữ liệu lên trang 'all_category_product'
         return view('admin_layout')->with('admin.all_category_product', $manage_category_product);
@@ -105,5 +106,14 @@ class CategoryProductController extends Controller
         DB::table('category_product')->where('category_id', $category_product_id)->delete();
         Session::put('message', 'Delete category successfully');
         return Redirect::to('all-category-product');
+    }
+
+    public function search_category_product(Request $request)
+    {
+        // Lấy danh sach sản phẩm
+        $all_category_product = CategoryProduct::where('category_name', 'like', '%' . $request->search_category_product . '%')->paginate(10);
+
+        // Trả về view hiển thị sau khi lọc
+        return view('admin.all_category_product', ['all_category_product' => $all_category_product->isEmpty() ? null : $all_category_product]);
     }
 }
