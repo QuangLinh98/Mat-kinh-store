@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('email');
-            $table->string('phone', 30)->unique()->nullable();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->renameColumn('id', 'user_id');
+            $table->renameColumn('name', 'user_name');
+            $table->renameColumn('email', 'user_email');
+            $table->renameColumn('phone', 'user_phone', 30)->unique()->nullable();
+            $table->renameColumn('email_verified_at', 'user_email_verified_at')->nullable();
+            $table->renameColumn('password', 'user_password');
             $table->rememberToken();
             $table->timestamps();
         });
@@ -28,6 +28,13 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::table('users', function (Blueprint $table) {
+            $table->renameColumn('user_id', 'id');
+            $table->renameColumn('user_name', 'name');
+            $table->renameColumn('user_email', 'email');
+            $table->renameColumn('user_phone', 'phone');
+            $table->renameColumn('user_email_verified_at', 'email_verified_at');
+            $table->renameColumn('user_password', 'password');
+        });
     }
 };

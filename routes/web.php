@@ -7,6 +7,10 @@ use App\Http\Controllers\CategoryProductController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\sliderController;
+use App\Http\Controllers\CartsController;
+use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\CheckOutController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -205,3 +209,61 @@ Route::get('/delete-slide/{id}', [
 Route::get('/search-slider', [
     sliderController::class, 'search_slider'
 ])->name('search-slider');
+
+//============================================================================================================
+//Quản lý Order
+// add tocard
+Route::get(
+    '/product/add-to-card/{id}',
+    [
+        CartsController::class, 'addToCard'
+    ]
+)->name('addToCard');
+//cart detail
+Route::get('/cartDetail', [
+    CartsController::class, 'showCart'
+])->name('cartDetail');
+//update cart
+Route::get('/cart-update', [
+    CartsController::class, 'upDateCart'
+])->name('updateCart');
+Route::get('/cart-delete_by_id', [
+    CartsController::class, 'deleteCartById'
+])->name('deleteCart');
+
+// route check out
+Route::get('/check_out', [
+
+    CartsController::class, 'getTotal'
+])->name('check_out');
+Route::post('/vn_payment', [
+
+    CheckOutController::class, 'vn_payment'
+])->name('vn_payment');
+Route::post('/vn_momo', [
+
+    CheckOutController::class, 'vn_momo'
+])->name('vn_momo');
+Route::post('/vn_onepay', [
+
+    CheckOutController::class, 'vn_onepay'
+])->name('vn_onepay');
+//route thank History
+Route::get('/thank', [
+
+    HistoryController::class, 'index'
+])->name('thank');
+
+Route::get('/thank_vn_momo', [
+
+    HistoryController::class, 'insertPaymentVnMomo'
+])->name('isert_momo');
+Route::get('/thank_vn_pay', [
+
+    HistoryController::class, 'insertPaymentVNpay'
+])->name('isert_vn_pay');
+
+Route::get('/data_user', [
+
+    HistoryController::class, 'getDataCheckOut'
+])->name('input_data');

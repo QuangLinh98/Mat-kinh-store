@@ -156,7 +156,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         </li>
                         {{-- End --}}
 
-                        {{-- Product Dashboard --}}
+                        {{-- Member Dashboard --}}
                         <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class="fa fa-book"></i>
@@ -167,6 +167,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <li><a href="{{ URL::to('/all-member/') }}">Show member list</a></li>
                             </ul>
                         </li>
+                        {{-- End --}}
+
+                        {{-- Order Dashboard --}}
+                        {{-- <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-book"></i>
+                                <span>Category products</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a href="{{ URL::to('/add-category-product/') }}">Order</a></li>
+                                <li><a href="{{ URL::to('/all-category-product/') }}">Show Order detail</a></li>
+                            </ul>
+                        </li> --}}
                         {{-- End --}}
 
                     </ul>
