@@ -38,6 +38,8 @@ class HistoryController extends Controller
                 $productNames[] = $cart['name'];
                 $totalQuantity += $cart['quantity'];
             }
+
+            dd($carts);
             $today = Carbon::now(); // Lấy ngày hiện tại
             $expectedDeliveryDate = $today->addDays(3)->format('Y-m-d'); // Cộng thêm 3 ngày
             $order = new Order([
@@ -133,6 +135,7 @@ class HistoryController extends Controller
     public function insertPaymentVNpay(Request $request)
     {
         $data = $request->all();
+
         $data_vnpay = [
             'partnerCode'   => $data['vnp_TmnCode'],
             'accessKey'     => $data['vnp_TxnRef'],
@@ -141,8 +144,8 @@ class HistoryController extends Controller
             'orderId'       => $data['vnp_TmnCode'],
             'orderInfo'     => $data['vnp_OrderInfo'],
             'orderType'     => $data['vnp_CardType'],
+            'localMessage'  => $data['vnp_TransactionStatus'],
             'transId'       => $data['vnp_TransactionNo'],
-            'localMessage '  => $data['vnp_TransactionStatus'],
             'responseTime'  => $data['vnp_PayDate'],
             'payType'       => $data['vnp_BankCode'],
             'signature'     => $data['vnp_SecureHash']

@@ -170,17 +170,31 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         {{-- End --}}
 
                         {{-- Order Dashboard --}}
-                        {{-- <li class="sub-menu">
+                        <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class="fa fa-book"></i>
-                                <span>Category products</span>
+                                <span>Order</span>
                             </a>
                             <ul class="sub">
-                                <li><a href="{{ URL::to('/add-category-product/') }}">Order</a></li>
-                                <li><a href="{{ URL::to('/all-category-product/') }}">Show Order detail</a></li>
+                                <li><a href="{{ URL::to('/view-order/') }}">Manage Order</a></li>
+
                             </ul>
-                        </li> --}}
+                        </li>
                         {{-- End --}}
+
+                        {{-- Discount Dashboard --}}
+                        <li class="sub-menu">
+                            <a href="javascript:;">
+                                <i class="fa fa-book"></i>
+                                <span>Discount</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a href="{{ URL::to('/add-discount/') }}">Add discount</a></li>
+                                <li><a href="{{ URL::to('/all-discount/') }}">Show discount list</a></li>
+                            </ul>
+                        </li>
+                        {{-- End --}}
+
 
                     </ul>
                 </div>

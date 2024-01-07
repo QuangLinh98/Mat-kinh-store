@@ -52,6 +52,7 @@
 
 
                             <button type="submit" name="add-slider" class="btn btn-info ">Add Slider</button>
+
                         </form>
                     </div>
 

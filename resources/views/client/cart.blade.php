@@ -1,5 +1,5 @@
 @extends('layout')
-@section('content')
+@section('cart_content')
     <div class="cart-check-out">
         <section class="h-100 h-custom" style="background-color: #d2c9ff;">
             <div class="container py-5 h-100  update_cart_url" data-url="{{ route('updateCart') }}">
@@ -55,12 +55,12 @@
                                                         </div>
 
                                                         <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                                            <a href="#!" id="cart-edit" class="text-muted cart-edit"
+                                                            <a href="" id="cart-edit" class="text-muted cart-edit"
                                                                 data-id="{{ $id }}">
                                                                 <i class="fas fa-edit"></i></a>
                                                         </div>
                                                         <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                                            <a href="#!" data-id="{{ $id }}"
+                                                            <a href="" data-id="{{ $id }}"
                                                                 class="text-muted cart-delete">
                                                                 <i class="fas fa-times"></i></a>
                                                         </div>

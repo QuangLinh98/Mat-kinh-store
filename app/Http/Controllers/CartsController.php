@@ -85,6 +85,6 @@ class CartsController extends Controller
     public function getTotal()
     {
         $carts = session()->get('cart');
-        return view('checkout.CheckOut', compact('carts'));
+        return view('checkout.Checkout', compact('carts'));
     }
 }

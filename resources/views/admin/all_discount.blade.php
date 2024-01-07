@@ -3,7 +3,7 @@
     <div class="table-agile-info">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Show List Product
+                Show List Discount
             </div>
             <div class="row w3-res-tb">
                 <div class="col-sm-5 m-b-xs">
@@ -13,8 +13,8 @@
                 </div>
                 <div class="col-sm-3">
                     <form class="input-group" role="form" method="GET" name="myForm1"
-                        action="{{ route('search-product') }}">
-                        <input type="text" name="search_product" class="input-sm form-control" placeholder="Search">
+                        action="{{ route('search-discount') }}">
+                        <input type="text" name="search_discount" class="input-sm form-control" placeholder="Search">
                         <span class="input-group-btn">
                             <button class="btn btn-sm btn-success" type="submit">Search</button>
                         </span>
@@ -45,48 +45,51 @@
                     <thead>
                         <tr>
 
-                            <th>Product name</th>
-                            <th>Product quantity</th>
-                            <th>Product price</th>
-                            <th>Product image</th>
-                            <th>Product category</th>
-                            <th>Show/Hiden</th>
+                            <th>Discount name</th>
+                            <th>Discount_code</th>
+                            <th>Discount_percent</th>
+                            <th>Discount_status</th>
+                            <th>Start_date</th>
+                            <th>End_date</th>
 
                             <th style="width:30px;"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if (isset($all_product) && count($all_product) > 0)
-                            @foreach ($all_product as $key => $pro)
+                        @if (isset($all_discount) && $all_discount->count() > 0)
+                            @foreach ($all_discount as $key => $disc)
                                 <tr>
-
-                                    <td>{{ $pro->product_name }}</td>
-                                    <td>{{ $pro->product_quantity }}</td>
-                                    <td>{{ $pro->product_price }}</td>
-                                    <td><img src="public/uploads/product/{{ $pro->product_image }}" width="100"
-                                            height="100" alt=""></td>
-                                    <td>{{ $pro->category_name }}</td>
+                                    <td>{{ $disc->discount_name }}</td>
+                                    <td>{{ $disc->discount_code }}</td>
+                                    <td>{{ $disc->discount_percent }}</td>
 
                                     <td><span class="text-ellipsis">
-                                            @if ($pro->product_status == 0)
-                                                <a href="{{ '/unactive-product/' . $pro->product_id }}">
+                                            @if ($disc->discount_status == 0)
+                                                <a href="{{ '/unactive-discount/' . $disc->discount_id }}">
                                                     <span class="fa-thumb-styling fa fa-thumbs-up"></span>
                                                 </a>
                                             @else
-                                                <a href="{{ '/active-product/' . $pro->product_id }}">
+                                                <a href="{{ '/active-discount/' . $disc->discount_id }}">
                                                     <span class="fa-thumb-styling fa fa-thumbs-down"></span>
                                                 </a>
                                             @endif
-                                        </span></td>
+                                        </span>
+                                    </td>
+
+                                    <td>{{ $disc->start_date }}</td>
+                                    <td>{{ $disc->end_date }}</td>
+
+
+
 
                                     <td>
-                                        <a href="{{ URL::to('/edit-product/' . $pro->product_id) }}" class="active"
+                                        <a href="{{ URL::to('/edit-discount/' . $disc->discount_id) }}" class="active"
                                             ui-toggle-class="">
                                             <i class="styling-edit fa fa-pencil-square-o text-success text-active"></i>
                                         </a>
 
                                         <a onclick="return confirm('Are you sure to delete?')"
-                                            href="{{ URL::to('/delete-product/' . $pro->product_id) }}" class="active"
+                                            href="{{ URL::to('/delete-discount/' . $disc->discount_id) }}" class="active"
                                             ui-toggle-class="">
                                             <i class="styling-edit fa fa-times text-danger text"></i></a>
                                         </a>
@@ -106,18 +109,18 @@
                         <small class="text-muted inline m-t-sm m-b-sm">showing 20-30 of 50 items</small>
                     </div>
                     <div class="col-sm-7 text-right text-center-xs">
-                        @if ($all_product && $all_product->count() > 0)
+                        @if (isset($all_discount) && $all_discount->count() > 0)
                             <ul class="pagination pagination-sm m-t-none m-b-none">
-                                <li><a href="{{ $all_product->previousPageUrl() }}"><i class="fa fa-chevron-left"></i></a>
+                                <li><a href="{{ $all_discount->previousPageUrl() }}"><i class="fa fa-chevron-left"></i></a>
                                 </li>
 
-                                @for ($i = 1; $i <= $all_product->lastPage(); $i++)
-                                    <li class="{{ $all_product->currentPage() == $i ? 'active' : '' }}">
-                                        <a href="{{ $all_product->url($i) }}">{{ $i }}</a>
+                                @for ($i = 1; $i <= $all_discount->lastPage(); $i++)
+                                    <li class="{{ $all_discount->currentPage() == $i ? 'active' : '' }}">
+                                        <a href="{{ $all_discount->url($i) }}">{{ $i }}</a>
                                     </li>
                                 @endfor
 
-                                <li><a href="{{ $all_product->nextPageUrl() }}"><i class="fa fa-chevron-right"></i></a>
+                                <li><a href="{{ $all_discount->nextPageUrl() }}"><i class="fa fa-chevron-right"></i></a>
                                 </li>
                             </ul>
                         @endif

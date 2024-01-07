@@ -61,30 +61,26 @@ class ProductController extends Controller
         $data['category_id'] = $request->product_cate;
         $data['product_status'] = $request->product_status;
         $data['product_image'] = $request->product_image;
-        //1. user có ảnh
-        $get_image = $request->file('product_image');
 
-        //2. nếu chọn ảnh, up lên từ đâu đó
-        if ($get_image) {
-            $get_name_image = $get_image->getClientOriginalName();             // Lấy tên ảnh
-            $name_image = current(explode('.', $get_name_image));
-            $new_image = $name_image . rand(0, 99) . '.' . $get_image->getClientOriginalExtension();    // Lấy đuôi mở rộng (jpeg , jpg,..)
-            $get_image->move('public/uploads/product', $new_image);   // đường  dẫn tới nơi lưu ảnh
-            $data['product_image'] = $new_image;
-            DB::table('product')->insert($data);
-            Session::put('message', 'Add product successfully');
-            return Redirect::to('add-product');
+        // Kiểm tra người dùng có muốn thay đổi tên anh hay không
+        if ($request->has('product_image_name')) {
+            $new_image = $request->input('product_image_name');
         } else {
-            $data['product_image'] = '';
+            // Tạo tên file mới cho ảnh
+            $get_image = $request->file('product_image');
+            $name_image = $get_image->getClientOriginalName();
+            $new_image = $name_image . rand(0, 99) . '.' . $get_image->getClientOriginalExtension();
         }
 
+        // Lưu tên file ảnh vào CSDL
+        $data['product_image'] = $new_image;
+        $get_image->move('public/uploads/product', $new_image);   // đường  dẫn tới nơi lưu ảnh
 
-        // echo '<pre>';
-        // print_r($data);
-        // echo '</pre>';
-
+        // Lưu sản phẩm vào CSDL
         DB::table('product')->insert($data);
-        Session::put('message', 'Add product successfully');
+
+        // Trả về thông báo
+        Session::put('message', 'Add product successfully!');
         return Redirect::to('add-product');
     }
 
@@ -128,7 +124,20 @@ class ProductController extends Controller
         $this->AuthLogin();
 
         $data = array();
-        $data['product_name'] = $request->product_name;
+
+        // Kiểm tra input đầu vào tên có trùng lặp không
+        $checkProductName = DB::table('product')
+            ->where('product_name', $request->product_name)
+            ->where('product_id', '!=', $product_id)
+            ->exists();
+
+        if ($checkProductName == true) {
+            Session::put('message', '<h3 style="color:red;">Product_name already exits ? Please input again!</h3>');
+            return Redirect()->back();
+        } else {
+            $data['product_name'] = $request->product_name;
+        }
+
         $data['product_quantity'] = $request->product_quantity;
         $data['product_price'] = $request->product_price;
         $data['product_desc'] = $request->product_desc;

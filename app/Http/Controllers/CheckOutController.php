@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CheckOutController extends Controller
 {
     public function index()
     {
 
-        return view('Checkout.CheckOut');
+        return view('checkout.Checkout');
     }
     public function vn_payment(Request $request)
     {

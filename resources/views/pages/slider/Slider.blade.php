@@ -8,7 +8,11 @@
                         <li data-target="#slider-carousel" data-slide-to="1"></li>
                         <li data-target="#slider-carousel" data-slide-to="2"></li>
                     </ol>
-
+                    <style type="text/css">
+                        img.img.img-responsive.img-slider {
+                            height: 350px;
+                        }
+                    </style>
                     <div class="carousel-inner">
                         @php
                             $i = 0;
@@ -20,12 +24,15 @@
                             <div class="item {{ $i == 1 ? 'active' : '' }}">
 
                                 <div class="col-sm-12">
-                                    <img src="public/uploads/slider/{{ $slide->slider_image }} "
-                                        class="img img-responsive" alt="{{ $slide->slider_desc }}">
+                                    <img alt="{{ $slide->slider_desc }}"
+                                        src="{{ asset('public/uploads/slider/' . $slide->slider_image) }}"
+                                        height="200" width="100%" class="img img-responsive img-slider">
 
                                 </div>
                             </div>
                         @endforeach
+
+
                     </div>
 
                     <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">

@@ -95,6 +95,7 @@
 
 
                                 <button type="submit" name="add-product" class="btn btn-info ">Update</button>
+                                <button type="cancel" name="cancel-product" class="btn btn-warning ">Cancel</button>
                             </form>
                         @endforeach
                     </div>

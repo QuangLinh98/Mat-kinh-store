@@ -88,22 +88,35 @@ class CategoryProductController extends Controller
     }
 
     // Hàm xử lý Update product , Sử dụng phương thức Request vì cần lấy yêu cầu dữ liệu
-    public function update_category_product(Request $request, $category_product_id)
+    public function update_category_product(Request $request, $category_id)
     {
         $this->AuthLogin();
         $data = array();
-        $data['category_name'] = $request->category_product_name;
-        $data['category_desc'] = $request->category_product_desc;
-        DB::table('category_product')->where('category_id', $category_product_id)->update($data);
+
+        // Kiểm tra đầu vào category có trùng lặp không
+
+        $checkCategory = DB::table('category_product')
+            ->where('category_name', $request->category_name)
+            ->where('category_id', '!=', $category_id)
+            ->exists();
+        if ($checkCategory == true) {
+            Session::put('message', '<h3 style="color:red;">Category_name already exits ? Please input again!</h3>');
+            return Redirect()->back();
+        } else {
+            $data['category_name'] = $request->category_name;
+        }
+
+        $data['category_desc'] = $request->category_desc;
+        DB::table('category_product')->where('category_id', $category_id)->update($data);
         Session::put('message', 'Update category successfully');
         return Redirect::to('all-category-product');
     }
 
     // Hàm xử lý Delete product ,
-    public function delete_category_product($category_product_id)
+    public function delete_category_product($categoryt_id)
     {
         $this->AuthLogin();
-        DB::table('category_product')->where('category_id', $category_product_id)->delete();
+        DB::table('category_product')->where('category_id', $categoryt_id)->delete();
         Session::put('message', 'Delete category successfully');
         return Redirect::to('all-category-product');
     }

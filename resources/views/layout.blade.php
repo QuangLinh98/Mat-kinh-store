@@ -139,13 +139,13 @@
         </div><!--/header-bottom-->
     </header><!--/header-->
 
-    {{-- import Slider --}}
-    {{-- @include('category.Category'); --}}
-    @yield('content')
-    {{-- @include('slider.Slider'); --}}
 
 
-
+    @include('pages.slider.Slider');
+    @include('pages.category.Category');
+    {{-- @yield('cart_content');
+    @yield('checkout_content'); --}}
+    {{-- @include('admislider.Slider'); --}}
 
 
     <footer id="footer"><!--Footer-->

@@ -1,5 +1,5 @@
 @extends('layout')
-@section('content')
+@section('checkout_content')
     <section class="bg-light py-5">
         <div class="container">
 

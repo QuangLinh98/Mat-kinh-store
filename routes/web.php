@@ -10,6 +10,8 @@ use App\Http\Controllers\sliderController;
 use App\Http\Controllers\CartsController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\CheckOutController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\DiscountController;
 
 
 /*
@@ -144,6 +146,45 @@ Route::get('/search-product', [
 
 //============================================================================================================
 
+// MANAGE DISCOUNT
+
+Route::get('/add-discount', [
+    DiscountController::class, 'add_discount'
+])->name('add-discount');
+
+Route::get('/all-discount', [
+    DiscountController::class, 'all_discount'
+])->name('all-discount');
+
+Route::post('/save-discount', [
+    DiscountController::class, 'save_discount'
+])->name('save-discount');
+
+Route::get('/unactive-discount/{discountt_id}', [
+    DiscountController::class, 'unactive_discount'
+])->name('unactive-discount');
+
+Route::get('/active-discount/{discount_id}', [
+    DiscountController::class, 'active_discount'
+])->name('active-discount');
+
+Route::get('/edit-discount/{discount_id}', [
+    DiscountController::class, 'edit_discount'
+])->name('edit-discount');
+
+Route::post('/update-discount/{discount_id}', [
+    DiscountController::class, 'update_discount'
+])->name('update-discount');
+
+Route::get('/delete-discount/{discount_id}', [
+    DiscountController::class, 'delete_discount'
+])->name('delete-discount');
+
+Route::get('/search-discount', [
+    DiscountController::class, 'search_discount'
+])->name('search-discount');
+
+
 // XỬ LÝ Member (DASHBOARD)
 
 Route::post('/register-member', [
@@ -234,6 +275,10 @@ Route::get('/cart-delete_by_id', [
 // route check out
 Route::get('/check_out', [
 
+    CartsController::class, 'indext'
+])->name('check_out_index');
+Route::get('/check_out', [
+
     CartsController::class, 'getTotal'
 ])->name('check_out');
 Route::post('/vn_payment', [
@@ -248,6 +293,20 @@ Route::post('/vn_onepay', [
 
     CheckOutController::class, 'vn_onepay'
 ])->name('vn_onepay');
+
+
+
+// MANAGE ORDER
+Route::get('/view-order', [
+    OrderController::class, 'view_order'
+])->name('view-order');
+
+Route::get('/delete-order/{id}', [
+    OrderController::class, 'delete_order'
+])->name('delete-order');
+
+
+
 //route thank History
 Route::get('/thank', [
 

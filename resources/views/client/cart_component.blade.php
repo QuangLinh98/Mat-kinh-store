@@ -1,5 +1,5 @@
 @extends('layout')
-@section('content')
+@section('cart_content')
     <div class="cart-check-out">
         <section class="h-100 h-custom" style="background-color: #d2c9ff;">
             <div class="container py-5 h-100  update_cart_url" data-url="{{ route('updateCart') }}">
